@@ -15,7 +15,7 @@ public class TaskAllocator {
      * @return The two GradingTask objects in a list, each having half of the submissions
      */
     public static List<GradingTask> sloppyAllocator(List<Submission> submissions) {
-        // TODO: Tehtävä 4
+        // TODO: Assignment 4
         // Retruns null for now to suppress warnings
         return null;
     }
@@ -29,7 +29,7 @@ public class TaskAllocator {
      * @return List of GradingTasks allocated with some amount of submissions (depends on the implementation)
      */
     public static List<GradingTask> allocate(List<Submission> submissions, int taskCount) {
-        // TODO: Tehtävä 5
+        // TODO: Assignment 5
         // Retruns null for now to suppress warnings
         return null;
     }

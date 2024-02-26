@@ -10,37 +10,40 @@ import fi.utu.tech.common.SubmissionGenerator.Strategy;
 public class App1 {
     public static void main( String[] args )
     {
-        // Otetaan funktion aloitusaika talteen suoritusajan laskemista varten
+        // Save the starting time of the function to calculate the execution time
         long startTime = System.currentTimeMillis();
 
-        // Generoidaan kasa esimerkkitehtäväpalautuksia
+        // Generate list of ungraded "submissions" for testing
         List<Submission> ungradedSubmissions = SubmissionGenerator.generateSubmissions(21, 200, Strategy.STATIC);
 
-        // Tulostetaan tiedot esimerkkipalautuksista ennen arviointia
+        // Print list of submissions *before* grading
         for (var ug : ungradedSubmissions) {
             System.out.println(ug);
         }
 
-        // Luodaan uusi arviointitehtävä
+        // Create a new grading task
         GradingTask gradingTask = new GradingTask();
-        // Annetaan palautukset gradeAll-metodille ja saadaan arvioidut palautukset takaisin
+
+        // All submissions are given to gradeAll method, which will return the submissions as graded
         List<Submission> gradedSubmissions =  gradingTask.gradeAll(ungradedSubmissions);
         /*
-         * TODO: Muokkaa common-pakkauksen GradingTask-luokkaa siten,
-         * että alla oleva run()-metodi (ilman argumentteja!) tarkistaa palautukset (ungradedSubmissions).
-         * Yllä olevaa gt.gradeAll()-metodia ei tule enää käyttää suoraan
-         * tästä main-metodista. Tarkemmat ohjeet tehtävänannossa.
-         * Joudut keksimään, miten GradingTaskille voi antaa tehtävät ja miten ne siltä saa noukittua
+         * TODO: Modify the GradingTask class of the package named "common"
+         * so that the run() method below checks ungradedSubmissions
+         * (without being given any arguments!). The gt.gradeAll()
+         * method above should no longer be used directly from this main method.
+         * For more detailed instructions, see the assignment.
+         * You will have to figure out how to give Submission objects to GradingTasks
+         * and how to get the graded submissions back after being graded.
          */
         // gradingTask.run();
         
-        // Tulostetaan arvioidut palautukset
+        // Print the graded submissions
         System.out.println("------------ CUT HERE ------------");
         for (var gs : gradedSubmissions) {
             System.out.println(gs);
         }
 
-        // Lasketaan funktion suoritusaika
+        // The total time of execution
         System.out.printf("Total time for grading: %d ms%n", System.currentTimeMillis()-startTime);
     }
 }
