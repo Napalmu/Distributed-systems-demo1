@@ -11,49 +11,40 @@ import fi.utu.tech.common.SubmissionGenerator;
 import fi.utu.tech.common.SubmissionGenerator.Strategy;
 
 public class App2 {
-    public static void main( String[] args )
-    {
-        // Kopioi edellisen tehtävän ratkaisu tähän lähtökohdaksi
-        class GradingTask {
-            private final List<Submission> ungradedSubmissions;
-            private List<Submission> gradedSubmissions;
-            public void run(){
-                this.gradeAll(ungradedSubmissions);
-            }
-            public GradingTask(List<Submission> ungradedSubmissions)
-            {
-                this.ungradedSubmissions = ungradedSubmissions;
-            }
-            private Random rnd = new Random();
+    public static void main( String[] args ) throws InterruptedException {
+        // Otetaan funktion aloitusaika talteen suoritusajan laskemista varten
+        long startTime = System.currentTimeMillis();
 
-            /**
-             * Grades all given submissions. Does not mutate the given objects
-             * @param submissions List of submissions to be graded
-             * @return List of graded submissions (new objects)
-             */
-            public List<Submission> gradeAll(List<Submission> submissions) {
-                List<Submission> graded = new ArrayList<>();
-                for (var s : submissions) {
-                    graded.add(grade(s));
-                }
-                return this.gradedSubmissions = graded;
-            }
-            public List<Submission> getGradedSubmissions(){
-                return this.gradedSubmissions;
-            }
-            /**
-             * Grades the given submission
-             * @param s Ungraded submission to be graded
-             * @return New submission object with a given grade
-             */
-            public Submission grade(Submission s) {
-                try {
-                    Thread.sleep(s.getDifficulty());
-                } catch (InterruptedException e) {
-                    System.err.println("Who dared to interrupt my sleep?!");
-                }
-                return s.grade(rnd.nextInt(6));
-            }
+        // Generoidaan kasa esimerkkitehtäväpalautuksia
+        List<Submission> ungradedSubmissions = SubmissionGenerator.generateSubmissions(21, 200, Strategy.STATIC);
+
+        // Tulostetaan tiedot esimerkkipalautuksista ennen arviointia
+        for (var ug : ungradedSubmissions) {
+            System.out.println(ug);
         }
+
+        // Luodaan uusi arviointitehtävä
+        GradingTask gradingTask = new GradingTask(ungradedSubmissions);
+        // Annetaan palautukset gradeAll-metodille ja saadaan arvioidut palautukset takaisin
+        //List<Submission> gradedSubmissions =  gradingTask.gradeAll(ungradedSubmissions);
+        /*
+         * TODO: Muokkaa common-pakkauksen GradingTask-luokkaa siten,
+         * että alla oleva run()-metodi (ilman argumentteja!) tarkistaa palautukset (ungradedSubmissions).
+         * Yllä olevaa gt.gradeAll()-metodia ei tule enää käyttää suoraan
+         * tästä main-metodista. Tarkemmat ohjeet tehtävänannossa.
+         * Joudut keksimään, miten GradingTaskille voi antaa tehtävät ja miten ne siltä saa noukittua
+         */
+        Thread gradingThread = new Thread(gradingTask);
+        gradingThread.start();
+        gradingThread.join();
+
+        // Tulostetaan arvioidut palautukset
+        System.out.println("------------ CUT HERE ------------");
+        for (var gs : gradingTask.getGradedSubmissions()) {
+            System.out.println(gs);
+        }
+
+        // Lasketaan funktion suoritusaika
+        System.out.printf("Total time for grading: %d ms%n", System.currentTimeMillis()-startTime);
     }
 }
