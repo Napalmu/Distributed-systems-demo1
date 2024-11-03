@@ -8,8 +8,16 @@ import java.util.Random;
  * You need to modify this file
  */
 
-public class GradingTask  {
-
+public class GradingTask {
+    private final List<Submission> ungradedSubmissions;
+    private List<Submission> gradedSubmissions;
+    public void run(){
+        this.gradeAll(ungradedSubmissions);
+    }
+    public GradingTask(List<Submission> ungradedSubmissions)
+    {
+        this.ungradedSubmissions = ungradedSubmissions;
+    }
     private Random rnd = new Random();
 
     /**
@@ -22,9 +30,11 @@ public class GradingTask  {
         for (var s : submissions) {
             graded.add(grade(s));
         }
-        return graded;
+        return this.gradedSubmissions = graded;
     }
-
+    public List<Submission> getGradedSubmissions(){
+        return this.gradedSubmissions;
+    }
     /**
      * Grades the given submission
      * @param s Ungraded submission to be graded
