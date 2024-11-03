@@ -8,7 +8,7 @@ import java.util.Random;
  * You need to modify this file
  */
 
-public class GradingTask {
+public class GradingTask implements Runnable{
     private final List<Submission> ungradedSubmissions;
     private List<Submission> gradedSubmissions;
     public void run(){
