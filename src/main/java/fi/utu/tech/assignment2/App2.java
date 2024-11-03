@@ -11,7 +11,7 @@ import fi.utu.tech.common.SubmissionGenerator;
 import fi.utu.tech.common.SubmissionGenerator.Strategy;
 
 public class App2 {
-    public static void main( String[] args ) throws InterruptedException {
+    public static void main( String[] args ) {
         // Otetaan funktion aloitusaika talteen suoritusajan laskemista varten
         long startTime = System.currentTimeMillis();
 
@@ -36,7 +36,6 @@ public class App2 {
          */
         Thread gradingThread = new Thread(gradingTask);
         gradingThread.start();
-        gradingThread.join();
 
         // Tulostetaan arvioidut palautukset
         System.out.println("------------ CUT HERE ------------");
