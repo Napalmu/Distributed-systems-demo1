@@ -17,14 +17,13 @@ public class TaskAllocator {
      */
     public static List<GradingTask> sloppyAllocator(List<Submission> submissions) {
         // TODO: Tehtävä 4
-        // Retruns null for now to suppress warnings
-        List<GradingTask> list = new ArrayList<>(2);
+        List<GradingTask> allocationList = new ArrayList<>(2);
         int size = submissions.size();
         GradingTask gradingTask1 = new GradingTask(submissions.subList(0, (int) Math.floor((float) size /2)));
         GradingTask gradingTask2 = new GradingTask(submissions.subList((int) Math.ceil((float) size/2), size));
-        list.add(0, gradingTask1);
-        list.add(1, gradingTask2);
-        return list;
+        allocationList.add(0, gradingTask1);
+        allocationList.add(1, gradingTask2);
+        return allocationList;
     }
 
 
@@ -37,7 +36,22 @@ public class TaskAllocator {
      */
     public static List<GradingTask> allocate(List<Submission> submissions, int taskCount) {
         // TODO: Tehtävä 5
-        // Retruns null for now to suppress warnings
-        return null;
+        List<GradingTask> allocatedList = new ArrayList<>(taskCount);
+        //Create array for allocating submissions into sublists
+        List<List<Submission>> submissionSublists = new ArrayList<>(taskCount);
+        //Fill submissionSublists array with empty ArrayLists
+        for (int i = 0; i < taskCount; i++){
+            submissionSublists.add(new ArrayList<>());
+        }
+        //Allocate items to submissionSublists using round-robin distribution
+        for (int i = 0; i<submissions.size(); i++){
+            submissionSublists.get(i % taskCount).add(submissions.get(i));
+        }
+        // Create GradingTask -objects from sublists and add them to the allocatedList -array
+        for (List<Submission> sublist: submissionSublists){
+            allocatedList.add(new GradingTask(sublist));
+        }
+
+        return allocatedList;
     }
 }
