@@ -1,5 +1,6 @@
 package fi.utu.tech.common;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,7 +18,13 @@ public class TaskAllocator {
     public static List<GradingTask> sloppyAllocator(List<Submission> submissions) {
         // TODO: Tehtävä 4
         // Retruns null for now to suppress warnings
-        return null;
+        List<GradingTask> list = new ArrayList<>(2);
+        int size = submissions.size();
+        GradingTask gradingTask1 = new GradingTask(submissions.subList(0, (int) Math.floor((float) size /2)));
+        GradingTask gradingTask2 = new GradingTask(submissions.subList((int) Math.ceil((float) size/2), size));
+        list.add(0, gradingTask1);
+        list.add(1, gradingTask2);
+        return list;
     }
 
 

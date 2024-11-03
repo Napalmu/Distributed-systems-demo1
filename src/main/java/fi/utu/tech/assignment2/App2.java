@@ -34,7 +34,9 @@ public class App2 {
          * tästä main-metodista. Tarkemmat ohjeet tehtävänannossa.
          * Joudut keksimään, miten GradingTaskille voi antaa tehtävät ja miten ne siltä saa noukittua
          */
+        //Luodaan uusi säie
         Thread gradingThread = new Thread(gradingTask);
+        //Käynnistetään säie
         gradingThread.start();
 
         // Tulostetaan arvioidut palautukset
