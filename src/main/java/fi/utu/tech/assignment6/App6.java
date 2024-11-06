@@ -32,7 +32,21 @@ public class App6 {
         }
 
         // Luodaan uusi arviointitehtävä
-        List<GradingTask> gradingTask = TaskAllocator.allocate(ungradedSubmissions, 9);
+        List<GradingTask> gradingTask = TaskAllocator.allocate(ungradedSubmissions, ungradedSubmissions.size());
+        ExecutorService executorService = Executors.newFixedThreadPool(gradingTask.size());
+
+            for(var gs : gradingTask){
+                executorService.execute(gs);
+            }
+        executorService.shutdown();
+        try {
+            if (!executorService.awaitTermination(60, TimeUnit.SECONDS)) {
+                System.out.println("Grading did not finish in time.");
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         // Annetaan palautukset gradeAll-metodille ja saadaan arvioidut palautukset takaisin
         //List<Submission> gradedSubmissions =  gradingTask.gradeAll(ungradedSubmissions);
         /*
@@ -42,13 +56,12 @@ public class App6 {
          * tästä main-metodista. Tarkemmat ohjeet tehtävänannossa.
          * Joudut keksimään, miten GradingTaskille voi antaa tehtävät ja miten ne siltä saa noukittua
          */
-        //Luodaan säikeet
 
 
         // Tulostetaan arvioidut palautukset
         System.out.println("------------ CUT HERE ------------");
-        for (var gs : gradingTask.get(0).getGradedSubmissions()) {
-            System.out.println(gs);
+        for (GradingTask task : gradingTask) {
+            System.out.println(task.getGradedSubmissions());
         }
 
 

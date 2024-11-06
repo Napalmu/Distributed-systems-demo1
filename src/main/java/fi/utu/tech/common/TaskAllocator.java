@@ -17,13 +17,13 @@ public class TaskAllocator {
      */
     public static List<GradingTask> sloppyAllocator(List<Submission> submissions) {
         // TODO: Tehtävä 4
-        List<GradingTask> allocationList = new ArrayList<>(2);
+        List<GradingTask> allocatedList = new ArrayList<>(2);
         int size = submissions.size();
         GradingTask gradingTask1 = new GradingTask(submissions.subList(0, (int) Math.floor((float) size /2)));
         GradingTask gradingTask2 = new GradingTask(submissions.subList((int) Math.ceil((float) size/2), size));
-        allocationList.add(0, gradingTask1);
-        allocationList.add(1, gradingTask2);
-        return allocationList;
+        allocatedList.add(0, gradingTask1);
+        allocatedList.add(1, gradingTask2);
+        return allocatedList;
     }
 
 

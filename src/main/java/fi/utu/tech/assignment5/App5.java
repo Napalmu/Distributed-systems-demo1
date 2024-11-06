@@ -19,7 +19,7 @@ public class App5 {
         long startTime = System.currentTimeMillis();
 
         // Generoidaan kasa esimerkkitehtäväpalautuksia
-        List<Submission> ungradedSubmissions = SubmissionGenerator.generateSubmissions(21, 200, Strategy.STATIC);
+        List<Submission> ungradedSubmissions = SubmissionGenerator.generateSubmissions(9, 200, Strategy.STATIC);
 
         // Tulostetaan tiedot esimerkkipalautuksista ennen arviointia
         for (var ug : ungradedSubmissions) {
@@ -37,6 +37,7 @@ public class App5 {
          * tästä main-metodista. Tarkemmat ohjeet tehtävänannossa.
          * Joudut keksimään, miten GradingTaskille voi antaa tehtävät ja miten ne siltä saa noukittua
          */
+
         //Luodaan säikeet
         Thread gradingThread1 = new Thread(gradingTask.get(0));
         Thread gradingThread2 = new Thread(gradingTask.get(1));
@@ -59,46 +60,23 @@ public class App5 {
         gradingThread8.start();
         gradingThread9.start();
         //Laitetaan pääsäie odottamaan, että gradingThreadit saavat tehtävät suoritettua
-        gradingThread1.join();
-        gradingThread2.join();
-        gradingThread3.join();
-        gradingThread4.join();
-        gradingThread5.join();
-        gradingThread6.join();
-        gradingThread7.join();
-        gradingThread8.join();
-        gradingThread9.join();
-
+        try{
+            gradingThread1.join();
+            gradingThread2.join();
+            gradingThread3.join();
+            gradingThread4.join();
+            gradingThread5.join();
+            gradingThread6.join();
+            gradingThread7.join();
+            gradingThread8.join();
+            gradingThread9.join();
+        } catch (Exception ignored) {}
 
 
         // Tulostetaan arvioidut palautukset
         System.out.println("------------ CUT HERE ------------");
-        for (var gs : gradingTask.get(0).getGradedSubmissions()) {
-            System.out.println(gs);
-        }
-        for (var gs : gradingTask.get(1).getGradedSubmissions()) {
-            System.out.println(gs);
-        }
-        for (var gs : gradingTask.get(2).getGradedSubmissions()) {
-            System.out.println(gs);
-        }
-        for (var gs : gradingTask.get(3).getGradedSubmissions()) {
-            System.out.println(gs);
-        }
-        for (var gs : gradingTask.get(4).getGradedSubmissions()) {
-            System.out.println(gs);
-        }
-        for (var gs : gradingTask.get(5).getGradedSubmissions()) {
-            System.out.println(gs);
-        }
-        for (var gs : gradingTask.get(6).getGradedSubmissions()) {
-            System.out.println(gs);
-        }
-        for (var gs : gradingTask.get(7).getGradedSubmissions()) {
-            System.out.println(gs);
-        }
-        for (var gs : gradingTask.get(8).getGradedSubmissions()) {
-            System.out.println(gs);
+        for (GradingTask task : gradingTask) {
+            System.out.println(task.getGradedSubmissions());
         }
 
         // Lasketaan funktion suoritusaika

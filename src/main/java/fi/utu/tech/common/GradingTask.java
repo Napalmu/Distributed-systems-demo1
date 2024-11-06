@@ -3,6 +3,9 @@ package fi.utu.tech.common;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * You need to modify this file
@@ -11,11 +14,17 @@ import java.util.Random;
 public class GradingTask implements Runnable{
     private final List<Submission> ungradedSubmissions;
     private List<Submission> gradedSubmissions;
+
     public void run(){
+        //System.out.println("Grading started in: " + Thread.currentThread().getName());
         this.gradeAll(ungradedSubmissions);
+        //System.out.println("Grading completed in: " + Thread.currentThread().getName());
     }
+
+
     public GradingTask(List<Submission> ungradedSubmissions)
     {
+
         this.ungradedSubmissions = ungradedSubmissions;
     }
     private Random rnd = new Random();
@@ -48,4 +57,6 @@ public class GradingTask implements Runnable{
         }
         return s.grade(rnd.nextInt(6));
     }
+
+
 }
